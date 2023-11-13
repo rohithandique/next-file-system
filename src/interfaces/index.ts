@@ -1,9 +1,9 @@
 export type rootParam = {
     params: urlPathType
-    searchParams: SearchParams
+    searchParams: searchParams
 }
 
-export type SearchParams = {}
+export type searchParams = {}
 
 export type urlPathType = {
     slug: string[]
