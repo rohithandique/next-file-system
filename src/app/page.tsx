@@ -1,19 +1,54 @@
-import { getDirectoryData } from '@/utils/crudData';
-import { getPathFromParams } from '@/utils/parseData';
-import Link from 'next/link'
+import { Button } from "~/components/ui/button";
+import * as RadioButtonGroup from "~/components/ui/radio-button-group";
+import * as Slider from "~/components/ui/slider";
+import * as Tabs from "~/components/ui/tabs";
 
-export default async function Home() {
-
-  let path = getPathFromParams({slug: [""]});
-  let data = getDirectoryData(path);
-
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <Link className="rounded border border-blue-600 bg-blue-600 px-12 py-3 text-white hover:outline-none hover:ring" href="/">
-          Go to Root Directory
-        </Link>
-      </div>
-    </main>
-  )
+    <Tabs.Root defaultValue="button" className="p-6">
+      <Tabs.List>
+        <Tabs.Trigger value="button">Button</Tabs.Trigger>
+        <Tabs.Trigger value="radio">Radio Group</Tabs.Trigger>
+        <Tabs.Trigger value="slider">Slider</Tabs.Trigger>
+        <Tabs.Indicator />
+      </Tabs.List>
+      <Tabs.Content value="button">
+        <Button size="md">Hello Park UI</Button>
+      </Tabs.Content>
+      <Tabs.Content value="radio">
+        <RadioButtonGroup.Root defaultValue="react">
+          {[
+            { value: "S" },
+            { value: "M" },
+            { value: "L", disabled: true },
+            { value: "XL" },
+          ].map((option, id) => (
+            <RadioButtonGroup.Item
+              key={id}
+              value={option.value}
+              disabled={option.disabled}
+            >
+              <RadioButtonGroup.ItemControl />
+              <RadioButtonGroup.Label>{option.value}</RadioButtonGroup.Label>
+            </RadioButtonGroup.Item>
+          ))}
+        </RadioButtonGroup.Root>
+      </Tabs.Content>
+      <Tabs.Content value="slider">
+        <Slider.Root min={0} max={100} defaultValue={[33]}>
+          <Slider.Control>
+            <Slider.Track>
+              <Slider.Range />
+            </Slider.Track>
+            <Slider.Thumb index={0} />
+          </Slider.Control>
+          <Slider.MarkerGroup>
+            <Slider.Marker value={25}>25</Slider.Marker>
+            <Slider.Marker value={50}>50</Slider.Marker>
+            <Slider.Marker value={75}>75</Slider.Marker>
+          </Slider.MarkerGroup>
+        </Slider.Root>
+      </Tabs.Content>
+    </Tabs.Root>
+  );
 }
